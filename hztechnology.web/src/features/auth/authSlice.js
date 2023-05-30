@@ -12,6 +12,7 @@ const initialState = {
   userToken,
   error: null,
   success: false,
+  isLoggedIn: false,
 }
 
 const authSlice = createSlice({
@@ -23,12 +24,19 @@ const authSlice = createSlice({
       state.loading = false
       state.userInfo = null
       state.userToken = null
-      state.error = null
+      state.error = null,
+      state.isLoggedIn = false
     },
     setCredentials: (state, { payload }) => {
         console.log("setting user creds")
       state.userInfo = payload.userDetails
+      state.loading = false
+      state.isLoggedIn = true
     },
+    setLoading: (state, { payload }) => {
+      console.log("Set Loading:" + payload.loading)
+      state.loading = payload.loading
+    }
   },
   extraReducers: {
     // login user
@@ -40,10 +48,12 @@ const authSlice = createSlice({
       state.loading = false
       state.userInfo = payload.userInfo
       state.userToken = payload.userToken
+      state.isLoggedIn = true
     },
     [userLogin.rejected]: (state, { payload }) => {
       state.loading = false
       state.error = payload
+      state.isLoggedIn = false
     },
     // register user
     [registerUser.pending]: (state) => {
@@ -61,6 +71,6 @@ const authSlice = createSlice({
   },
 })
 
-export const { logout, setCredentials } = authSlice.actions
+export const { logout, setCredentials, setLoading } = authSlice.actions
 
 export default authSlice.reducer

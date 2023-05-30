@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import Error from '../components/Error'
 import Spinner from '../components/Spinner'
 import { registerUser } from '../features/auth/authActions'
+import { ClipLoader } from 'react-spinners'
 
 const RegisterScreen = () => {
     const [customError, setCustomError] = useState(null)
@@ -72,6 +73,15 @@ const RegisterScreen = () => {
         </div>
         <div class="">
           <input
+            placeholder='Role'
+            type='text'
+            className='form-input'
+            {...register('role')}
+            required
+          />
+        </div>
+        <div class="">
+          <input
             placeholder='Username'
             type='username'
             className='form-input'
@@ -97,9 +107,14 @@ const RegisterScreen = () => {
             required
           />
         </div>
-        <button class="bg-transparent border border-yellow-500 hover:border-yellow-600 text-black rounded-full w-20" type='submit' disabled={loading}>
-        {loading ? <Spinner /> : 'Register'}
+        <div>
+          {loading ?
+          <ClipLoader /> :
+          <button class="bg-transparent border border-yellow-500 hover:border-yellow-600 text-black rounded-full w-20" type='submit' disabled={loading}>
+        Register
       </button>
+          }
+        </div>
       </form>
       </div>
       </div>
