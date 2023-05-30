@@ -6,7 +6,7 @@ const backendURL = 'https://localhost:7212'
 
 export const registerUser = createAsyncThunk(
   'auth/register',
-  async ({ firstName, lastName, userName, email, password }, { rejectWithValue }) => {
+  async ({ firstName, lastName, userName, email, password, role }, { rejectWithValue }) => {
     try {
       const config = {
         headers: {
@@ -15,10 +15,11 @@ export const registerUser = createAsyncThunk(
       }
       await axios.post(
         `${backendURL}/auth/registerUser`,
-        { firstName, lastName, userName, email, password },
+        { firstName, lastName, userName, email, password, role },
         config
       )
     } catch (error) {
+      
     // return custom error message from backend if present
       if (error.response && error.response.data.message) {
         return rejectWithValue(error.response.data.message)

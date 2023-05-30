@@ -10,7 +10,6 @@ export const authApi = createApi({
       const token = getState().auth.userToken
       console.log(token)
       if (token) {
-        console.log("Token")
        // include token in req header
         headers.set('authorization', `Bearer ${token}`)  
         return headers
@@ -29,10 +28,16 @@ export const authApi = createApi({
             url: '/quoting',
             method: 'GET',
         }),
-    })
+    }),
+    getAllShippers: builder.query({
+      query: () => ({
+          url: '/shipper',
+          method: 'GET',
+      }),
+  })
   }),
 })
 
 // export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetUserDetailsQuery, useGetAllQuotesQuery } = authApi
+export const { useGetUserDetailsQuery, useGetAllQuotesQuery, useGetAllShippersQuery } = authApi
