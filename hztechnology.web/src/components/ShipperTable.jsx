@@ -189,7 +189,7 @@ export default function ShipperTable({data}) {
                 <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                   <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
                     <table {...getTableProps()} className="min-w-full divide-y divide-gray-200">
-                      <thead className="bg-gray-50">
+                      <thead className="bg-hz-gold">
                         {headerGroups.map(headerGroup => (
                           <tr {...headerGroup.getHeaderGroupProps()}>
                             {headerGroup.headers.map(column => (
@@ -197,7 +197,7 @@ export default function ShipperTable({data}) {
                               // we can add them into the header props
                               <th
                                 scope="col"
-                                className="group px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                                className="group px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
                                 {...column.getHeaderProps(column.getSortByToggleProps())}
                               >
                                 <div className="flex items-center justify-between">

@@ -16,6 +16,7 @@ import './index.css'
 import Quotes from "./pages/Quotes"
 import Layout from "./components/Layout"
 import Shippers from "./pages/Shippers"
+import Shipper from "./pages/Shipper"
 
 function App() {
   const router = createBrowserRouter([
@@ -40,6 +41,10 @@ function App() {
                 {
                   path: "/shippers",
                   element: <Shippers />
+                },
+                {
+                  path: "/shipper/:ID",
+                  element: <Shipper />
                 }
               ]
         },

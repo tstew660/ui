@@ -30,7 +30,7 @@ function Layout() {
         <div>
             <div class="flex">
                 <Sidebar/>
-                <div class="w-full">
+                <div class="w-full font-hz-font">
                     <Navbar />
                     {!isFetching ? <Outlet /> : <></>}
                     
