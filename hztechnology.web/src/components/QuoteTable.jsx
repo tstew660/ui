@@ -5,6 +5,7 @@ import { Button, PageButton } from './Button'
 import { classNames } from './Utils'
 import { SortIcon, SortUpIcon, SortDownIcon } from './Icons'
 import 'regenerator-runtime/runtime'
+import { NavLink, Outlet, Link } from 'react-router-dom'
 
 function GlobalFilter({
     preGlobalFilteredRows,
@@ -107,7 +108,7 @@ export function SelectColumnFilter({
   }
   
 
-export default function QuoteTable({data}) {
+export default function QuoteTable({data, selectedQuote, setSelectedQuote}) {
     let array = [
         "New",
         "In Progress",
@@ -145,7 +146,11 @@ export default function QuoteTable({data}) {
           },
           {
             Header: 'Shipper',
-            accessor: 'shipper.name',
+            accessor: 'shipper',
+            Cell: ({ row }) => {
+                console.log(row)
+                return <Link to={`/shipper/${row.original.shipper.id}`}>{`${row.original.shipper.name}`}</Link>;
+              },
           }
         ],
         []
@@ -201,7 +206,7 @@ export default function QuoteTable({data}) {
                 <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                   <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
                     <table {...getTableProps()} className="min-w-full divide-y divide-gray-200">
-                      <thead className="bg-gray-50">
+                      <thead className="bg-hz-gold">
                         {headerGroups.map(headerGroup => (
                           <tr {...headerGroup.getHeaderGroupProps()}>
                             {headerGroup.headers.map(column => (
@@ -209,7 +214,7 @@ export default function QuoteTable({data}) {
                               // we can add them into the header props
                               <th
                                 scope="col"
-                                className="group px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                                className="group px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
                                 {...column.getHeaderProps(column.getSortByToggleProps())}
                               >
                                 <div className="flex items-center justify-between">
@@ -237,7 +242,7 @@ export default function QuoteTable({data}) {
                         {page.map((row, i) => {  // new
                           prepareRow(row)
                           return (
-                            <tr {...row.getRowProps()}>
+                            <tr {...row.getRowProps()} onClick={() => setSelectedQuote(row)}>
                               {row.cells.map(cell => {
                                 return (
                                   <td
