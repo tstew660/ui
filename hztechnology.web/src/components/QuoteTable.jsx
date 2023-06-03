@@ -183,7 +183,7 @@ export default function QuoteTable({data, selectedQuote, setSelectedQuote}) {
         usePagination,  // new
         )
         return (
-            <div class="w-4/5">
+            <div class="w-full">
             <div className="sm:flex sm:gap-x-2">
               <GlobalFilter
                 preGlobalFilteredRows={preGlobalFilteredRows}
@@ -205,7 +205,7 @@ export default function QuoteTable({data, selectedQuote, setSelectedQuote}) {
               <div className="-my-2 overflow-x-auto -mx-4 sm:-mx-6 lg:-mx-8">
                 <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                   <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-                    <table {...getTableProps()} className="min-w-full divide-y divide-gray-200">
+                    <table {...getTableProps()} className="w-full table-fixed divide-y divide-gray-200">
                       <thead className="bg-hz-gold">
                         {headerGroups.map(headerGroup => (
                           <tr {...headerGroup.getHeaderGroupProps()}>
@@ -242,12 +242,12 @@ export default function QuoteTable({data, selectedQuote, setSelectedQuote}) {
                         {page.map((row, i) => {  // new
                           prepareRow(row)
                           return (
-                            <tr {...row.getRowProps()} onClick={() => setSelectedQuote(row)}>
+                            <tr class="" {...row.getRowProps()} onClick={() => setSelectedQuote(row)}>
                               {row.cells.map(cell => {
                                 return (
                                   <td
                                     {...cell.getCellProps()}
-                                    className="px-6 py-4 whitespace-nowrap"
+                                    className="px-6 py-4 truncate"
                                     role="cell"
                                   >
                                     {cell.column.Cell.name === "defaultRenderer"
