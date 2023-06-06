@@ -14,7 +14,9 @@ const ProtectedLayout = () => {
   if(loading)
   {
     return (
+      <div class="flex place-items-center place-content-center">
         <ClipLoader />
+      </div>
     )
   }
   else {
