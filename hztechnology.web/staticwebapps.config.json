@@ -1,9 +1,5 @@
 {
     "navigationFallback": {
       "rewrite": "/index.html"
-    },
-    "globalHeaders": {
-      "Access-Control-Allow-Origin": "https://delightful-stone-044bdda10.3.azurestaticapps.net",
-      "Access-Control-Allow-Methods": "POST, GET, OPTIONS"
     }
   }
