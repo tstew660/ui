@@ -11,7 +11,7 @@ const Sidebar = () => {
   const dispatch = useDispatch()
 
   return (
-            <aside class="text-hz-gold font-hz-font text-center h-full content-start pt-10 sticky top-0 flex flex-col w-96 bg-hz-blue z-50">
+            <aside class="text-hz-gold font-hz-font text-center h-full shadow-lg content-start pt-10 sticky top-0 flex flex-col w-96 bg-hz-blue z-50">
                     
                 <div class="text-3xl mx-auto relative pb-20  px-4">
                 {userInfo ?
