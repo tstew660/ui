@@ -2,7 +2,7 @@ import axios from 'axios'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { setCredentials } from './authSlice'
 
-const backendURL = 'https://localhost:7212'
+const backendURL = import.meta.env.VITE_HZ_API_URL
 
 export const registerUser = createAsyncThunk(
   'auth/register',
