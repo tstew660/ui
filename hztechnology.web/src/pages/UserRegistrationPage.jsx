@@ -39,7 +39,7 @@ const RegisterScreen = () => {
   
     return (
       <div class="h-5/6 flex flex-col gap-y-8 place-items-center place-content-center">
-      <div class="bg-zinc-100 rounded-lg flex flex-col place-items-center place-content-center w-96 mx-auto h-3/4">
+      <div class="bg-white rounded-lg flex flex-col place-items-center place-content-center w-96 mx-auto h-3/4">
       <h1 class="text-3xl pb-16">Register</h1>
       <form onSubmit={handleSubmit(submitForm)} class="flex flex-col gap-y-8 place-items-center place-content-center w-96 mx-auto h-3/5">
         {error && <Error>{error}</Error>}
@@ -48,7 +48,7 @@ const RegisterScreen = () => {
           <input
             placeholder='First Name'
             type='text'
-            className='form-input'
+            className='form-input border rounded-md border-gray-300 pl-1'
             {...register('firstName')}
             required
           />
@@ -57,7 +57,7 @@ const RegisterScreen = () => {
           <input
             placeholder='Last Name'
             type='text'
-            className='form-input'
+            className='form-input border rounded-md border-gray-300 pl-1'
             {...register('lastName')}
             required
           />
@@ -66,7 +66,7 @@ const RegisterScreen = () => {
           <input
             placeholder='Email'
             type='email'
-            className='form-input'
+            className='form-input border rounded-md border-gray-300 pl-1'
             {...register('email')}
             required
           />
@@ -75,7 +75,7 @@ const RegisterScreen = () => {
           <input
             placeholder='Role'
             type='text'
-            className='form-input'
+            className='form-input border rounded-md border-gray-300 pl-1'
             {...register('role')}
             required
           />
@@ -84,7 +84,7 @@ const RegisterScreen = () => {
           <input
             placeholder='Username'
             type='username'
-            className='form-input'
+            className='form-input border rounded-md border-gray-300 pl-1'
             {...register('userName')}
             required
           />
@@ -93,7 +93,7 @@ const RegisterScreen = () => {
           <input
             placeholder='Password'
             type='password'
-            className='form-input'
+            className='form-input border rounded-md border-gray-300 pl-1'
             {...register('password')}
             required
           />
@@ -102,7 +102,7 @@ const RegisterScreen = () => {
           <input
             placeholder='Confirm Password'
             type='password'
-            className='form-input'
+            className='form-input border rounded-md border-gray-300 pl-1'
             {...register('confirmPassword')}
             required
           />

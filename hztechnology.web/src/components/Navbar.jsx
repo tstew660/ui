@@ -11,7 +11,7 @@ export default function Navbar() {
   const dispatch = useDispatch()
 
     return (
-        <div class="flex text-hz-gold place-content-end w-full bg-hz-blue sticky top-0 h-16">
+        <div class="flex text-hz-gold place-content-end w-full bg-hz-blue z-50 h-16">
             {!userInfo ?
             <div class="w-1/6 flex gap-x-4 place-content-center place-items-center">
                 <Link to='/login'>Login</Link>

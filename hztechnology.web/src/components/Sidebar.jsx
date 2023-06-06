@@ -11,15 +11,15 @@ const Sidebar = () => {
   const dispatch = useDispatch()
 
   return (
-            <aside class="text-hz-gold font-hz-font text-center h-screen content-start pt-10 sticky top-0 flex flex-col w-96 bg-hz-blue z-50">
+            <aside class="text-hz-gold font-hz-font text-center h-full content-start pt-10 sticky top-0 flex flex-col w-96 bg-hz-blue z-50">
                     
                 <div class="text-3xl mx-auto relative pb-20  px-4">
                 {userInfo ?
                     <Link class="flex flex-row gap-x-2 w-5/6 pl-4" to="/"><img class="w-1/5" src="./logo3-emblem.png"></img>
-                    <img class="w-4/5" src="./logo3-text.png"/>
+                    <img class="w-4/5" src="./logo3-text (1).png"/>
                     </Link> :
                     <Link class="flex flex-row gap-x-2 w-5/6 pl-4" to="/login"><img class="w-1/5" src="./logo3-emblem.png"></img>
-                    <img class="w-4/5" src="./logo3-text.png"/>
+                    <img class="w-4/5" src="./logo3-text (1).png"/>
                     </Link> }
                 </div>
                 {userInfo ? 

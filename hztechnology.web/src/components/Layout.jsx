@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { NavLink, Outlet, Link } from 'react-router-dom'
 import { useGetUserDetailsQuery } from '../services/auth/authService'
 import { logout, setCredentials,setLoading } from '../features/auth/authSlice'
+import Test from './Test';
 
 function Layout() {
     const dispatch = useDispatch()
@@ -27,16 +28,20 @@ function Layout() {
   }, [data, dispatch])
 
     return (
-        <div>
-            <div class="flex">
+            <div class="flex relative h-screen overflow-hidden">
                 <Sidebar/>
-                <div class="w-full font-hz-font">
-                    <Navbar />
-                    {!isFetching ? <Outlet /> : <></>}
+                <div class="w-full h-full font-hz-font overflow-hidden pb-16">
+                  <div class="h-16 sticky top-0 z-50">
+                  <Navbar />
+                  </div>
+                  <main class=" h-full overflow-y-auto bg-sky-50">
+                  {!isFetching ? <Outlet /> : <></>}
+                  </main>
+                    
+                    
                     
                 </div>
             </div>
-        </div>
     );
 }
 

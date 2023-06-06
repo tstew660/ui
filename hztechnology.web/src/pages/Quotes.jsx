@@ -13,14 +13,13 @@ export default function Quotes() {
 
 
     return (
-      <div class="place-items-center place-content-center flex flex-col pt-10 ">
-        <h1 class="text-2xl">All Quotes</h1>
+      <div class="place-items-center place-content-center h-full flex flex-col">
         {!isFetching && data ?
-        <div class="flex flex-row w-5/6 border border-indigo-600">
-          <div class="w-4/5">
+        <div class="flex flex-row w-5/6 bg-white h-screen overflow-hidden border border-gray-200">
+          <div class="w-4/5 h-full ">
           <QuoteTable data={data} selectedQuote={selectedQuote} setSelectedQuote={setSelectedQuote} />
           </div>
-          <div class="w-1/5">
+          <div class="w-1/5 h-full">
           <QuoteDetails selectedQuote={selectedQuote} />
           </div>
           

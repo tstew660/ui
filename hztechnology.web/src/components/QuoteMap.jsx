@@ -38,7 +38,7 @@ export default function QuoteMap({locations}){
             startPosition : {},
             endPosition: {}
         }
-        Geocode.setApiKey("AIzaSyDzRSInDX2cuzi9bRNUsAqKi-aY9h-BS7g");
+        Geocode.setApiKey("");
         Geocode.setLocationType("ROOFTOP");
         await Geocode.fromAddress(locations.startAddress).then(
             (response) => {
@@ -101,7 +101,7 @@ const markerDragEnd = (event, index) => {
 }
   return (
     // Important! Always set the container height explicitly
-    <LoadScript googleMapsApiKey='AIzaSyDzRSInDX2cuzi9bRNUsAqKi-aY9h-BS7g'>
+    <LoadScript googleMapsApiKey=''>
     <div class="w-full h-full">
         
         
