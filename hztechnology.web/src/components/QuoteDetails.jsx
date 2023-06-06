@@ -6,6 +6,7 @@ import { EnvelopeIcon, PhoneIcon } from "@heroicons/react/20/solid";
 export default function QuoteDetails({selectedQuote}) {
     console.log(selectedQuote)
     const [locations, setLocations] = useState(null);
+    const [directionsResponse, setDirectionsResponse] = useState(null);
     useEffect(() => {
         if (selectedQuote != null)
         {
@@ -27,18 +28,22 @@ export default function QuoteDetails({selectedQuote}) {
                 {locations != null ?
                 <div class="h-64">
                     {console.log(locations)}
-                    <QuoteMap locations={locations}/>
+                    <QuoteMap locations={locations} directionsResponse={directionsResponse} setDirectionsResponse={setDirectionsResponse}/>
                 </div> :
                 <ClipLoader />}
                 <div class="px-2 flex flex-col gap-y-4">
-                    <div class="flex flex-row place-items-center text-8">
+                <div class="flex flex-row place-items-center text-8">
                     <h1 class="basis-3/5">{selectedQuote.original.shipper.name}</h1>
                     <a class="basis-1/5" href={'tel:' + selectedQuote.original.shipper.phone}><PhoneIcon class=" h-8" /></a>
                     <a class="basis-1/5" href={'mailto:' + selectedQuote.original.shipper.email}><EnvelopeIcon class=" h-8" /></a>
                 </div>
                 <div class="">
-                    <h3>{selectedQuote.original.shipmentAddress.city} {selectedQuote.original.shipmentAddress.state}</h3>
-                    <h3>{selectedQuote.original.destinationAddress.city} {selectedQuote.original.destinationAddress.state}</h3>
+                    {directionsResponse != null && 
+                    <>
+                    <h1>Trip</h1>
+                    <h3>{selectedQuote.original.shipmentAddress.city} {selectedQuote.original.shipmentAddress.state} 0 mi</h3>
+                    <h3>{selectedQuote.original.destinationAddress.city} {selectedQuote.original.destinationAddress.state} {directionsResponse.routes[0].legs[0].distance.text}</h3>
+                    </>}
                 </div>
                 <div class="">
                     <h1>Pick Up Date</h1>
