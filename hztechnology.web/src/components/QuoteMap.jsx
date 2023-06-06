@@ -7,12 +7,11 @@ import { ClipLoader } from "react-spinners";
 
 
 
-export default function QuoteMap({locations}){
+export default function QuoteMap({locations, directionsResponse, setDirectionsResponse}){
     
     
     const [startCoordinates, setStartCoordinates] = useState(null);
     const [endCoordinates, setEndCoordinates] = useState(null);
-    const [directionsResponse, setDirectionsResponse] = useState(null);
     const [loadingRoute, setLoadingRoute] = useState(false)
 
     async function calculateRoute(coors) {
@@ -23,7 +22,9 @@ export default function QuoteMap({locations}){
           destination: coors.endPosition,
           travelMode: window.google.maps.TravelMode.DRIVING,
         });
+        console.log(results)
         setDirectionsResponse(results);
+        console.log(directionsResponse)
       }
 
       function clearRoute() {
@@ -38,7 +39,7 @@ export default function QuoteMap({locations}){
             startPosition : {},
             endPosition: {}
         }
-        Geocode.setApiKey("");
+        Geocode.setApiKey("AIzaSyDzRSInDX2cuzi9bRNUsAqKi-aY9h-BS7g");
         Geocode.setLocationType("ROOFTOP");
         await Geocode.fromAddress(locations.startAddress).then(
             (response) => {
@@ -101,7 +102,7 @@ const markerDragEnd = (event, index) => {
 }
   return (
     // Important! Always set the container height explicitly
-    <LoadScript googleMapsApiKey=''>
+    <LoadScript googleMapsApiKey='AIzaSyDzRSInDX2cuzi9bRNUsAqKi-aY9h-BS7g'>
     <div class="w-full h-full">
         
         
