@@ -133,16 +133,8 @@ export default function QuoteTable({data, selectedQuote, setSelectedQuote}) {
             accessor: d => `${d.destinationAddress.city}, ${d.destinationAddress.state} ${d.destinationAddress.zipCode}`,
           },
           {
-            Header: 'Commodity',
-            accessor: 'commodity.name',
-          },
-          {
-            Header: 'Dimm',
-            accessor: 'commodity.dimmensions',
-          },
-          {
             Header: 'Weight',
-            accessor: 'commodity.weight',
+            accessor: 'totalWeight',
           },
           {
             Header: 'Shipper',
