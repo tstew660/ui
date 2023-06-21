@@ -16,10 +16,10 @@ export default function Quotes() {
       <div class="place-items-center place-content-center h-full flex flex-col">
         {!isFetching && data ?
         <div class="flex flex-row w-5/6 bg-white h-screen overflow-hidden border border-gray-200">
-          <div class="w-4/5 h-full ">
+          <div class="w-3/4 h-full ">
           <QuoteTable data={data} selectedQuote={selectedQuote} setSelectedQuote={setSelectedQuote} />
           </div>
-          <div class="w-1/5 h-full">
+          <div class="w-1/4 h-full">
           <QuoteDetails selectedQuote={selectedQuote} />
           </div>
           

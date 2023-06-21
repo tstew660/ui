@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import QuoteMap from "./QuoteMap"
 import { ClipLoader } from "react-spinners";
-import { EnvelopeIcon, PhoneIcon, ArrowUpCircleIcon, ArrowDownCircleIcon } from "@heroicons/react/20/solid";
+import { EnvelopeIcon, PhoneIcon, ArrowUpCircleIcon, ArrowDownCircleIcon, MapPinIcon } from "@heroicons/react/20/solid";
 
 export default function QuoteDetails({selectedQuote}) {
     console.log(selectedQuote)
@@ -41,25 +41,30 @@ export default function QuoteDetails({selectedQuote}) {
                     <QuoteMap locations={locations} directionsResponse={directionsResponse} setDirectionsResponse={setDirectionsResponse}/>
                 </div> :
                 <ClipLoader />}
-                <div class="px-2 flex flex-col gap-y-4">
-                <div class="flex flex-row place-items-center text-8">
-                    <h1 class="basis-3/5">{selectedQuote.original.shipper.name}</h1>
-                    <a class="basis-1/5" href={'tel:' + selectedQuote.original.shipper.phone}><PhoneIcon class=" h-8" /></a>
-                    <a class="basis-1/5" href={'mailto:' + selectedQuote.original.shipper.email}><EnvelopeIcon class=" h-8" /></a>
+                <div class="px-2 pt-4 flex flex-col gap-y-4">
+                <div class="flex flex-row justify-between text-8">
+                    <h1 class=" font-semibold">{selectedQuote.original.shipper.name}</h1>
+                    <div class="flex flex-row gap-x-4">
+                    <a class="" href={'tel:' + selectedQuote.original.shipper.phone}><PhoneIcon class=" h-6" /></a>
+                    <a class="" href={'mailto:' + selectedQuote.original.shipper.email}><EnvelopeIcon class=" h-6" /></a>
+                    </div>
+                    
                 </div>
                 <div class="">
                     {directionsResponse != null && 
                     <>
-                    <h1 class="pb-4">Trip</h1>
+                    <h1 class="pb-4 font-semibold">Trip</h1>
                     <div class="flex flex-row gap-x-2">
-                    <ArrowUpCircleIcon class=" h-8"></ArrowUpCircleIcon>
+                    <ArrowUpCircleIcon class="h-8"></ArrowUpCircleIcon>
                     <h3 class="font-bold">{selectedQuote.original.shipmentAddress.city} {selectedQuote.original.shipmentAddress.state}</h3>
+                    
                     <p>0 mi</p>
                     
                     </div>
                     <div class="flex flex-row gap-x-2">
                     <ArrowDownCircleIcon class=" h-8"></ArrowDownCircleIcon>
-                    <h3 class="font-bold">{selectedQuote.original.destinationAddress.city} {selectedQuote.original.destinationAddress.state} </h3>
+                    <h3 class="font-bold  py-2">{selectedQuote.original.destinationAddress.city} {selectedQuote.original.destinationAddress.state} </h3>
+                    
                     <p>{directionsResponse.routes[0].legs[0].distance.text}</p>
                     
                     </div>
@@ -67,9 +72,9 @@ export default function QuoteDetails({selectedQuote}) {
                 </div>
                 <div class="">
                     <h1 class="font-semibold">Pick Up Date</h1>
-                    <p>{selectedQuote.original.pickUpDate}</p>
+                    <p>{new Date(selectedQuote.original.pickUpDate).toLocaleString().split(',')[0]}</p>
                     <h1 class="font-semibold">Delivery Date</h1>
-                    <p>{selectedQuote.original.deliveryDate}</p>
+                    <p>{new Date(selectedQuote.original.deliveryDate).toLocaleString().split(',')[0]}</p>
                 </div>
                 <div class="col-span-2">
                             <h1 class="font-semibold">Special Instructions</h1>
