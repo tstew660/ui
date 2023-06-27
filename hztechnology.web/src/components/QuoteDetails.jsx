@@ -2,20 +2,31 @@ import { useEffect, useState } from "react";
 import QuoteMap from "./QuoteMap"
 import { ClipLoader } from "react-spinners";
 import { EnvelopeIcon, PhoneIcon, ArrowUpCircleIcon, ArrowDownCircleIcon, MapPinIcon } from "@heroicons/react/20/solid";
+import { useCalculateRateMutation, useUpdateQuoteMutation } from '../services/auth/authService'
+import PostLoadForm from "./PostLoadForm";
 
-export default function QuoteDetails({selectedQuote}) {
+export default function QuoteDetails({selectedQuote, isFetching}) {
     console.log(selectedQuote)
     const [locations, setLocations] = useState(null);
     const [directionsResponse, setDirectionsResponse] = useState(null);
+    const [showPostLoadModal, setShowPostLoadModal] = useState(false);
     const [activeLoadList, setActiveLoadList] = useState([]);
+
     useEffect(() => {
         if (selectedQuote != null)
         {
-          setLocations({
-            startAddress: selectedQuote.original.shipmentAddress.city + " " + selectedQuote.original.shipmentAddress.state,
-            endAddress: selectedQuote.original.destinationAddress.city + " " + selectedQuote.original.destinationAddress.state
-          })
-          
+            if (locations == null) {
+                setLocations({
+                    startAddress: selectedQuote.shipmentAddress.city + " " + selectedQuote.shipmentAddress.state,
+                    endAddress: selectedQuote.destinationAddress.city + " " + selectedQuote.destinationAddress.state
+                  });
+            }
+            else if (locations.startAddress != selectedQuote.shipmentAddress.city + " " + selectedQuote.shipmentAddress.state && locations.endAddress != selectedQuote.destinationAddress.city + " " + selectedQuote.destinationAddress.state) {
+                setLocations({
+                  startAddress: selectedQuote.shipmentAddress.city + " " + selectedQuote.shipmentAddress.state,
+                  endAddress: selectedQuote.destinationAddress.city + " " + selectedQuote.destinationAddress.state
+                });
+            }
         } 
         else{
           console.log("token is not valid")
@@ -30,7 +41,22 @@ export default function QuoteDetails({selectedQuote}) {
             setActiveLoadList(activeLoadList => activeLoadList.filter(item => item !== id ));
         }
       }
-    return(
+
+      const [calculateRate, { isLoadingCalculate }] = useCalculateRateMutation();
+
+      const submitCalculateRate = () => {
+        let clonedObject = {...selectedQuote}
+        clonedObject = {...clonedObject, totalDistance: parseInt(directionsResponse.routes[0].legs[0].distance.text.replace(/\D/g,''))}
+        console.log(clonedObject);
+        calculateRate(clonedObject)
+        .unwrap()
+        .then(() => {})
+        .then((error) => {
+        console.log(error)
+      })
+      }
+
+    return (
         <div class="w-full h-full">
             <div class="border-y border-r border-gray-300 h-16"></div>
             {selectedQuote != null ? 
@@ -43,46 +69,66 @@ export default function QuoteDetails({selectedQuote}) {
                 <ClipLoader />}
                 <div class="px-2 pt-4 flex flex-col gap-y-4">
                 <div class="flex flex-row justify-between text-8">
-                    <h1 class=" font-semibold">{selectedQuote.original.shipper.name}</h1>
+                    <h1 class=" font-semibold">{selectedQuote.shipper.name}</h1>
                     <div class="flex flex-row gap-x-4">
-                    <a class="" href={'tel:' + selectedQuote.original.shipper.phone}><PhoneIcon class=" h-6" /></a>
-                    <a class="" href={'mailto:' + selectedQuote.original.shipper.email}><EnvelopeIcon class=" h-6" /></a>
+                    <a class="" href={'tel:' + selectedQuote.shipper.phone}><PhoneIcon class=" h-6" /></a>
+                    <a class="" href={'mailto:' + selectedQuote.shipper.email}><EnvelopeIcon class=" h-6" /></a>
                     </div>
                     
                 </div>
                 <div class="">
-                    {directionsResponse != null && 
+                <h1 class="pb-4 font-semibold">Trip</h1>
+                    {directionsResponse != null ? 
                     <>
-                    <h1 class="pb-4 font-semibold">Trip</h1>
                     <div class="flex flex-row gap-x-2">
                     <ArrowUpCircleIcon class="h-8"></ArrowUpCircleIcon>
-                    <h3 class="font-bold">{selectedQuote.original.shipmentAddress.city} {selectedQuote.original.shipmentAddress.state}</h3>
+                    <h3 class="font-bold">{selectedQuote.shipmentAddress.city} {selectedQuote.shipmentAddress.state}</h3>
                     
                     <p>0 mi</p>
                     
                     </div>
                     <div class="flex flex-row gap-x-2">
                     <ArrowDownCircleIcon class=" h-8"></ArrowDownCircleIcon>
-                    <h3 class="font-bold  py-2">{selectedQuote.original.destinationAddress.city} {selectedQuote.original.destinationAddress.state} </h3>
+                    <h3 class="font-bold  py-2">{selectedQuote.destinationAddress.city} {selectedQuote.destinationAddress.state} </h3>
                     
                     <p>{directionsResponse.routes[0].legs[0].distance.text}</p>
                     
                     </div>
-                    </>}
+                    </> : <ClipLoader />}
                 </div>
                 <div class="">
                     <h1 class="font-semibold">Pick Up Date</h1>
-                    <p>{new Date(selectedQuote.original.pickUpDate).toLocaleString().split(',')[0]}</p>
+                    <p>{new Date(selectedQuote.pickUpDate).toLocaleString().split(',')[0]}</p>
                     <h1 class="font-semibold">Delivery Date</h1>
-                    <p>{new Date(selectedQuote.original.deliveryDate).toLocaleString().split(',')[0]}</p>
+                    <p>{new Date(selectedQuote.deliveryDate).toLocaleString().split(',')[0]}</p>
                 </div>
                 <div class="col-span-2">
                             <h1 class="font-semibold">Special Instructions</h1>
-                            <p>{selectedQuote.original.specialInstructions}</p>
+                            <p>{selectedQuote.specialInstructions}</p>
+                </div>
+                <div>
+                    <h1 class="font-semibold">Actions</h1>
+                    <div>
+                        <button onClick={() => setShowPostLoadModal(true)}>Post Load</button>
+                        {showPostLoadModal ? (
+                            <PostLoadForm setShowPostLoadModal={setShowPostLoadModal} selectedQuote={selectedQuote} /> 
+                        ) : null}
+                    </div>
+                </div>
+                <div>
+                <h1 class="font-semibold">Rates</h1>
+                    {selectedQuote.carrierRate != null ?
+                    <div>Carrier Rate: ${selectedQuote.carrierRate}</div> :
+                    <div>
+                        {isLoadingCalculate || isFetching ?
+                        <ClipLoader />  :
+                        <button class="pb-4 font-semibold" onClick={submitCalculateRate}>Calculate Rate</button>     
+                    }
+                    </div> }
                 </div>
                 <div>
                     <h1 class="pb-4 font-semibold">Loads</h1>
-                    {selectedQuote.original.commodity.map((x) => 
+                    {selectedQuote.commodity.map((x) => 
                     <div class="pb-4">
                     <div class="drop-shadow-md bg-slate-50 rounded-lg">
                         <button onClick={() => setVisibleLoads(x.id)} class="font-semibold text-left  w-full p-6 ">

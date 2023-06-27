@@ -118,7 +118,7 @@ export default function QuoteTable({data, selectedQuote, setSelectedQuote}) {
         () => [
           {
             Header: 'Quote Number',
-            accessor: d => `HZQ${d.quoteNumber}`, // accessor is the "key" in the data
+            accessor: d => `HZQ${d.id}`, // accessor is the "key" in the data
           },
           {
             Header: 'Status',
@@ -235,7 +235,7 @@ export default function QuoteTable({data, selectedQuote, setSelectedQuote}) {
                             {page.map((row, i) => {  // new
                             prepareRow(row)
                             return (
-                                <tr class="hover:bg-gray-100 hover:cursor-pointer" {...row.getRowProps()} onClick={() => setSelectedQuote(row)}>
+                                <tr class="hover:bg-gray-100 hover:cursor-pointer" {...row.getRowProps()} onClick={() => setSelectedQuote(row.original)}>
                                 {row.cells.map(cell => {
                                     return (
                                     <td

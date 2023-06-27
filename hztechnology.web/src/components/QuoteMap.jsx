@@ -13,7 +13,8 @@ export default function QuoteMap({locations, directionsResponse, setDirectionsRe
 
     const [startCoordinates, setStartCoordinates] = useState(null);
     const [endCoordinates, setEndCoordinates] = useState(null);
-    const [loadingRoute, setLoadingRoute] = useState(false)
+    const [loadingRoute, setLoadingRoute] = useState(false);
+    
 
     async function calculateRoute(coors) {
         console.log(coors)
@@ -73,7 +74,8 @@ useEffect(() => {
             setLoadingRoute(true)
             GeoCode().then((coors) => {
                 calculateRoute(coors)})
-                .finally(() => {setLoadingRoute(false)})
+                .finally(() => {
+                  setLoadingRoute(false)})
     }
     
 }, [locations])

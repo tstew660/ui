@@ -30,20 +30,20 @@ const UserLoginPage = () => {
       <h1 class="text-3xl">Login</h1>
     <form onSubmit={handleSubmit(submitForm)} class="flex flex-col gap-y-8 place-items-center place-content-center w-96 mx-auto h-3/5">
       {error && <div>{error}</div>}
-      <div class="">
+      <div class="w-full flex place-content-center">
         <input
           placeholder='Username'
           type='text'
-          className='form-input border rounded-md border-gray-300 pl-1'
+          className='form-input w-3/4 border rounded-md border-gray-300 pl-1'
           {...register('userName')}
           required
         />
       </div>
-      <div class="">
+      <div class="w-full flex place-content-center">
         <input
           placeholder='Password'
           type='password'
-          className='form-input border rounded-md border-gray-300 pl-1'
+          className='form-input w-3/4 border rounded-md border-gray-300 pl-1'
           {...register('password')}
           required
         />

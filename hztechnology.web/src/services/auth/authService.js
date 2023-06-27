@@ -16,6 +16,7 @@ export const authApi = createApi({
       }
     },
   }),
+  tagTypes: ['Quote'],
   endpoints: (builder) => ({
     getUserDetails: builder.query({
       query: () => ({
@@ -26,18 +27,53 @@ export const authApi = createApi({
     getAllQuotes: builder.query({
         query: () => ({
             url: '/quoting',
-            method: 'GET',
+            method: 'GET'
         }),
+        providesTags: (result, error, arg) =>
+        result
+          ? [...result.map(({ id }) => ({ type: 'Quote', id })), 'Quote']
+          : ['Quote'],
     }),
+    getQuote: builder.query({
+      query: (id) => ({
+          url: `/quoting/${id}`,
+          method: 'GET'
+      }),
+      providesTags: ['Quote'],
+  }),
     getAllShippers: builder.query({
       query: () => ({
           url: '/shipper',
           method: 'GET',
       }),
-  })
+    }),
+    calculateRate: builder.mutation({
+      query: (payload) => ({
+          url: '/quoting/CalculateRateAsync',
+          method: 'POST',
+          body: payload
+      }),
+      invalidatesTags: (result, error, arg) => [{ type: 'Quote', id: arg.id }],
+    }),
+    updateQuote: builder.mutation({
+      query: ({...payload}) => ({
+          url: '/quoting/SaveQuoteAsync',
+          method: 'POST',
+          body: payload
+      }),
+      invalidatesTags: (result, error, arg) => [{ type: 'Quote', id: arg.id }],
+    }),
+    createLoadFromQuote: builder.mutation({
+      query: (payload) => ({
+          url: '/load/CreateLoadFromQuoteAsync',
+          method: 'POST',
+          body: payload
+      }),
+      invalidatesTags: (result, error, arg) => [{ type: 'Quote', id: arg.id }],
+    }),
   }),
 })
 
 // export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetUserDetailsQuery, useGetAllQuotesQuery, useGetAllShippersQuery } = authApi
+export const { useGetUserDetailsQuery, useGetAllQuotesQuery, useGetAllShippersQuery, useCalculateRateMutation, useUpdateQuoteMutation, useCreateLoadFromQuoteMutation } = authApi
