@@ -17,6 +17,12 @@ import Quotes from "./pages/Quotes"
 import Layout from "./components/Layout"
 import Shippers from "./pages/Shippers"
 import Shipper from "./pages/Shipper"
+import CreateLoad from "./pages/CreateLoad"
+import Commodity from "./components/CreateLoad/Commodity"
+import ShipperComponent from "./components/CreateLoad/Shipper"
+import Carrier from "./components/CreateLoad/Carrier"
+import Locations from "./components/CreateLoad/Locations"
+import Rates from "./components/CreateLoad/Rates"
 
 function App() {
   const router = createBrowserRouter([
@@ -45,6 +51,32 @@ function App() {
                 {
                   path: "/shipper/:ID",
                   element: <Shipper />
+                },
+                {
+                  path: "/createLoad",
+                  element: <CreateLoad />,
+                  children: [
+                    {
+                      path: "commodity",
+                      element: <Commodity />
+                    },
+                    {
+                      path: "shipper",
+                      element: <ShipperComponent />
+                    },
+                    {
+                      path: "carrier",
+                      element: <Carrier />
+                    },
+                    {
+                      path: "locations",
+                      element: <Locations />
+                    },
+                    {
+                      path: "rates",
+                      element: <Rates />
+                    }
+                  ]
                 }
               ]
         },
