@@ -109,7 +109,7 @@ export default function QuoteDetails({selectedQuote, isFetching}) {
                 <div>
                     <h1 class="font-semibold">Actions</h1>
                     <div>
-                        <button onClick={() => setShowPostLoadModal(true)}>Post Load</button>
+                        <button onClick={() => setShowPostLoadModal(true)}>Create Load</button>
                         {showPostLoadModal ? (
                             <PostLoadForm setShowPostLoadModal={setShowPostLoadModal} selectedQuote={selectedQuote} /> 
                         ) : null}

@@ -1,0 +1,37 @@
+[
+    {
+        "order": 1,
+        "page": "commodity",
+        "previousPage" : "",
+        "nextPage": "carrier",
+        "prettyNextPage": "Add a Carrier"
+    },
+    {
+        "order": 2,
+        "page": "carrier",
+        "previousPage" : "commodity",
+        "nextPage": "shipper",
+        "prettyNextPage": "Add a Shipper"
+    },
+    {
+        "order": 3,
+        "page": "shipper",
+        "previousPage" : "carrier",
+        "nextPage": "locations",
+        "prettyNextPage": "Set up Routes"
+    },
+    {
+        "order": 4,
+        "page": "locations",
+        "previousPage" : "shipper",
+        "nextPage": "rates",
+        "prettyNextPage": "Set up Rates"
+    },
+    {
+        "order": 5,
+        "page": "rates",
+        "previousPage" : "locations",
+        "nextPage": "confirmation",
+        "prettyNextPage": "Review Load Info"
+    }
+]

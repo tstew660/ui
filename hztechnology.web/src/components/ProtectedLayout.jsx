@@ -11,12 +11,10 @@ const ProtectedLayout = () => {
    const { loading, isLoggedIn } = useSelector((state) => state.auth)
    
   // show unauthorized screen if no user is found in redux store
-  if(loading)
+  if (loading)
   {
     return (
-      <div class="flex place-items-center place-content-center">
-        <ClipLoader />
-      </div>
+      <></>
     )
   }
   else {

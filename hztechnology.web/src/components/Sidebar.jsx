@@ -29,6 +29,7 @@ const Sidebar = () => {
                   <Link to="/user-profile">Profile</Link>
                   <Link to="/quoting">Quoting</Link>
                   <Link to="/shippers">Shipper Directory</Link>
+                  <Link to="/createLoad/commodity">Create Load</Link>
                 </div>
                 <div class="pb-10 text-left flex w-full gap-x-3 bg-hz-blue-lighter pt-10 px-2">
                   <Link to="/user-profile">

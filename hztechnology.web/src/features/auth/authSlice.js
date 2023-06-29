@@ -34,8 +34,8 @@ const authSlice = createSlice({
       state.isLoggedIn = true
     },
     setLoading: (state, { payload }) => {
-      console.log("Set Loading:" + payload.loading)
-      state.loading = payload.loading
+      console.log("Set Loading:" + payload)
+      state.loading = payload
     }
   },
   extraReducers: {
