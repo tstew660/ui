@@ -32,6 +32,7 @@ const initialState = {
     phone: null,
     fax: null
   },
+  truckType: null,
   customerRate: 0,
   specialInstructions: null,
   pickUpDate: null,
@@ -44,13 +45,12 @@ const loadSlice = createSlice({
   initialState,
   reducers: {
     setCommodities: (state, { payload }) => {
-      console.log(payload);
       state.commodity = payload.commodity;
       state.totalWeight = payload.totalWeight;
       state.specialInstructions = payload.specialInstructions;
     },
     setCarrier: (state, { payload }) => {
-      state.carrier = payload;
+      state.carrier = payload.carrier;
     },
     setShipper: (state, { payload }) => {
       state.shipper = payload;
