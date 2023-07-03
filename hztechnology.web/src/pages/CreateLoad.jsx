@@ -12,9 +12,10 @@ export default function CreateLoad() {
             <ProgressBar currentPage={currentPage} setCurrentPage={setCurrentPage} />
             </div>
             
-            <div class="w-5/6 bg-white h-full  border border-gray-200">
+            <div class="w-5/6 px-8 bg-white h-full overflow-auto border border-gray-200">
                 <Outlet context={[currentPage, setCurrentPage]} />
             </div>
+            
             
         </div>
     )

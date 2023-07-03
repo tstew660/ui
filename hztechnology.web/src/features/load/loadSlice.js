@@ -50,6 +50,7 @@ const loadSlice = createSlice({
       state.specialInstructions = payload.specialInstructions;
     },
     setCarrier: (state, { payload }) => {
+      console.log(payload);
       state.carrier = payload.carrier;
     },
     setShipper: (state, { payload }) => {

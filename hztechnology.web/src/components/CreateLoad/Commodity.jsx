@@ -11,24 +11,27 @@ export default function Commodity() {
   const [currentPage, setCurrentPage] = useOutletContext();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const commodity = useSelector((state) => state.load.commodity);
-  console.log(commodity)
-  const { register, control, handleSubmit } = useForm({ defaultValues: {commodity: commodity} });
+  const load = useSelector((state) => state.load);
+  const { register, control, watch, setValue, handleSubmit } = useForm({ defaultValues: load});
+  
 
-  const [activeLoadForm, setActiveLoadForm] = useState(commodity.length);
+  const [activeLoadForm, setActiveLoadForm] = useState(load.commodity.length);
   const [showLoadForm, setShowLoadForm] = useState(0);
   const [palletsSelected, setPalletsSelected] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-  const [loadLength, setLoadLength] = useState(commodity.length);
+  const [loadLength, setLoadLength] = useState(load.commodity.length);
   const [selectedDims, setSelectedDims] = useState(PalletTypes[0].dims);
+  const [totalWeight, setTotalWeight] = useState(load.totalWeight);
 
   const onSubmit = (data) => {
+    console.log(data)
     setCurrentPage(CreateLoadPages[currentPage.order]);
     dispatch(setCommodities(data));
     navigate(`../${currentPage.nextPage}`);
   };
 
   const { fields, append, remove } = useFieldArray({ name: 'commodity', control });
+  const watchAllFields = watch();
 
   const addLoad = () => {
     setSelectedDims(PalletTypes[0].dims);
@@ -45,6 +48,9 @@ export default function Commodity() {
     setIsEditing(false);
     console.log("added:" + index);
     setActiveLoadForm(-1);
+    setTotalWeight(parseInt(parseInt(watchAllFields.commodity[index].weight) + parseInt(totalWeight)));
+    let weight = parseInt(parseInt(watchAllFields.commodity[index].weight) + parseInt(totalWeight));
+    setValue('totalWeight', weight);
     setShowLoadForm(false);
     setPalletsSelected(false);
   }
@@ -55,6 +61,9 @@ export default function Commodity() {
     console.log("removed:" + index);
     setIsEditing(false);
     setActiveLoadForm(fields.length - 1);
+    setTotalWeight(parseInt(parseInt(totalWeight) - parseInt(watchAllFields.commodity[index].weight)));
+    let weight = parseInt(parseInt(totalWeight) - parseInt(watchAllFields.commodity[index].weight));
+    setValue('totalWeight', weight);
     remove(index);
     setShowLoadForm(false);
     setPalletsSelected(false);
@@ -79,16 +88,19 @@ export default function Commodity() {
 
   const setDims = (e) => {
     
-    const dim = PalletTypes.filter((x) => x.dims == e.target.value)
+    const dim = PalletTypes.filter((x) => x.dims == e.target.value);
+    console.log(dim)
+    setValue(`commodity.${activeLoadForm}.length`, dim[0].l);
+    setValue(`commodity.${activeLoadForm}.width`, dim[0].w);
+    setValue(`commodity.${activeLoadForm}.height`, dim[0].h);
     console.log(dim);
-    setSelectedDims(dim);
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-
-            <div class="w-4/5 mx-auto">
-                <legend class="text-black pb-4 text-left">Commodity Information</legend>
+    <form class="h-full flex pt-8 pb-4 flex-col justify-between" onSubmit={handleSubmit(onSubmit)}>
+        <div>
+            <div class="mx-auto">
+                <legend class="text-black pb-4 text-left">Commodities</legend>
                   <ul>
                   {fields.map((item, index) => {
                     return (
@@ -144,9 +156,9 @@ export default function Commodity() {
                     <div class="w-full mx-auto pb-4">
                       <fieldset class="h-20 grid lg:grid-cols-8 grid-cols-4 gap-1 gap-y-4">
                         <legend class="text-black pb-4 text-left">Size</legend>
-                        <input class="w-full border border-slate-400 h-full pl-2" defaultValue={selectedDims[0].l} placeholder="L" type="number" name="commodity.length" {...register(`commodity.${index}.length`, { required: true })} />
-                        <input class="w-full border border-slate-400 h-full pl-2" defaultValue={selectedDims[0].w} placeholder="W" type="number" name="commodity.width" {...register(`commodity.${index}.width`, { required: true })} />
-                        <input class="w-full border border-slate-400 h-full pl-2" defaultValue={selectedDims[0].h} placeholder="H" type="number" name="commodity.height" {...register(`commodity.${index}.height`, { required: true })} />
+                        <input class="w-full border border-slate-400 h-full pl-2" placeholder="L" type="number" name="commodity.length" {...register(`commodity.${index}.length`, { required: true })} />
+                        <input class="w-full border border-slate-400 h-full pl-2" placeholder="W" type="number" name="commodity.width" {...register(`commodity.${index}.width`, { required: true })} />
+                        <input class="w-full border border-slate-400 h-full pl-2" placeholder="H" type="number" name="commodity.height" {...register(`commodity.${index}.height`, { required: true })} />
                         <p class="bg-slate-100 h-full flex place-content-center place-items-center">in</p>
                         <div class="col-span-1"></div>
                         <input class="w-full border border-slate-400 h-full pl-2 col-span-2" placeholder="Weight" type="number" name="commodity.weight" {...register(`commodity.${index}.weight`, { required: true})} />
@@ -187,13 +199,29 @@ export default function Commodity() {
                   <button class="bg-transparent border border-yellow-500 hover:border-yellow-600 h-12 text-black rounded-full w-32" onClick={addLoad}>Add Load</button> :
                   <></>}
                 </div>
-                <div class="w-4/5 pt-6 mx-auto">
-                  <fieldset class="lg:h-40 h-80">
-                    <textarea class="w-full border border-slate-400 h-full pl-2" placeholder="Special Instructions" type="text" name="specialInstructions" {...register("specialInstructions", { required: false })} />
+                <div class="grid grid-cols-2 lg:gap-2 gap-y-4">
+                  <div class="pt-6 w-full">
+                  <legend class="text-black pb-4 text-left">Truck Type</legend>
+                    <fieldset class="h-8">
+                      <select class="w-full border border-slate-400 h-full pl-2" type="text" name="truckType" {...register(`truckType`, { required: false })} />
+                    </fieldset>
+                  </div>
+                  <div class="pt-6 w-full">
+                  <legend class="text-black pb-4 text-left">Total Weight</legend>
+                    <fieldset class="h-8">
+                      <input class="w-full border border-slate-400 h-full pl-2" defaultValue={totalWeight} type="number" name="totalWeight" {...register(`totalWeight`, { required: true })} />
+                    </fieldset>
+                  </div>
+                </div>
+                <div class="pt-6 mx-auto">
+                <legend class="text-black pb-4 text-left">Special Instructions</legend>
+                  <fieldset class="lg:h-40 h-40">
+                    <textarea class="w-full border border-slate-400 h-full pl-2" type="text" name="specialInstructions" {...register("specialInstructions", { required: false })} />
                   </fieldset>
                 </div>
-                <div class="h-20 w-32 flex place-content-end pt-2 bg-blue-50">
-                  <button class="bg-transparent border border-yellow-500 hover:border-yellow-600 h-3/4 text-black rounded-full w-32" type="submit">{currentPage.prettyNextPage}</button>
+                </div>
+                <div class="h-20 w-full flex place-content-end pt-6 pb-6">
+                  <button class="bg-transparent  border border-yellow-500 hover:border-yellow-600 h-12 text-black rounded-full w-32" type="submit">{currentPage.prettyNextPage}</button>
                 </div>
     </form>
   );
