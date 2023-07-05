@@ -54,7 +54,7 @@ const loadSlice = createSlice({
       state.carrier = payload.carrier;
     },
     setShipper: (state, { payload }) => {
-      state.shipper = payload;
+      state.shipper = payload.shipper;
     },
     setLocations: (state, { payload }) => {
       state.shipmentAddress = payload.shipmentAddress;
