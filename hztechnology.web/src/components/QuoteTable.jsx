@@ -152,10 +152,7 @@ export default function QuoteTable({data, selectedQuote, setSelectedQuote}) {
         getTableBodyProps,
         headerGroups,
         prepareRow,
-        page, // Instead of using 'rows', we'll use page,
-        // which has only the rows for the active page
-    
-        // The rest of these things are super handy, too ;)
+        page, 
         canPreviousPage,
         canNextPage,
         pageOptions,

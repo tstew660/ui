@@ -3,7 +3,7 @@ import { useNavigate, useOutletContext } from "react-router-dom";
 import { useForm,useFieldArray } from "react-hook-form";
 import { useState } from "react";
 import PalletTypes from "../../data/PalletTypes.json"
-import {TrashIcon, PencilIcon} from "@heroicons/react/20/solid";
+import {TrashIcon, PencilIcon } from "@heroicons/react/20/solid";
 import { setCommodities } from "../../features/load/loadSlice";
 import CreateLoadPages from "../../data/CreateLoadPages.json"
 
@@ -98,8 +98,8 @@ export default function Commodity() {
 
   return (
     <form class="h-full flex pt-8 pb-4 flex-col justify-between" onSubmit={handleSubmit(onSubmit)}>
-        <div>
-            <div class="mx-auto">
+        <div class="flex-col flex gap-y-4">
+            <div class="mx-auto border p-4 w-full">
                 <legend class="text-black pb-4 text-left">Commodities</legend>
                   <ul>
                   {fields.map((item, index) => {
@@ -199,25 +199,27 @@ export default function Commodity() {
                   <button class="bg-transparent border border-yellow-500 hover:border-yellow-600 h-12 text-black rounded-full w-32" onClick={addLoad}>Add Load</button> :
                   <></>}
                 </div>
-                <div class="grid grid-cols-2 lg:gap-2 gap-y-4">
-                  <div class="pt-6 w-full">
-                  <legend class="text-black pb-4 text-left">Truck Type</legend>
-                    <fieldset class="h-8">
-                      <select class="w-full border border-slate-400 h-full pl-2" type="text" name="truckType" {...register(`truckType`, { required: false })} />
+                <div class="border p-4">
+                    <div class="grid grid-cols-2 lg:gap-2 gap-y-4">
+                    <div class="pt-6 w-full">
+                    <legend class="text-black pb-4 text-left">Truck Type</legend>
+                        <fieldset class="h-8">
+                        <select class="w-full border border-slate-400 h-full pl-2" type="text" name="truckType" {...register(`truckType`, { required: false })} />
+                        </fieldset>
+                    </div>
+                    <div class="pt-6 w-full">
+                    <legend class="text-black pb-4 text-left">Total Weight</legend>
+                        <fieldset class="h-8">
+                        <input class="w-full border border-slate-400 h-full pl-2" defaultValue={totalWeight} type="number" name="totalWeight" {...register(`totalWeight`, { required: true })} />
+                        </fieldset>
+                    </div>
+                    </div>
+                    <div class="pt-6 mx-auto">
+                    <legend class="text-black pb-4 text-left">Special Instructions</legend>
+                    <fieldset class="lg:h-40 h-40">
+                        <textarea class="w-full border border-slate-400 h-full pl-2" type="text" name="specialInstructions" {...register("specialInstructions", { required: false })} />
                     </fieldset>
-                  </div>
-                  <div class="pt-6 w-full">
-                  <legend class="text-black pb-4 text-left">Total Weight</legend>
-                    <fieldset class="h-8">
-                      <input class="w-full border border-slate-400 h-full pl-2" defaultValue={totalWeight} type="number" name="totalWeight" {...register(`totalWeight`, { required: true })} />
-                    </fieldset>
-                  </div>
-                </div>
-                <div class="pt-6 mx-auto">
-                <legend class="text-black pb-4 text-left">Special Instructions</legend>
-                  <fieldset class="lg:h-40 h-40">
-                    <textarea class="w-full border border-slate-400 h-full pl-2" type="text" name="specialInstructions" {...register("specialInstructions", { required: false })} />
-                  </fieldset>
+                    </div>
                 </div>
                 </div>
                 <div class="h-20 w-full flex place-content-end pt-6 pb-6">
