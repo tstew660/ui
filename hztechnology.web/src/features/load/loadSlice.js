@@ -1,17 +1,26 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { Pause } from 'heroicons-react';
 
 
 const initialState = {
   quote: {},
   shipmentAddress: {
+    streetNumber: null,
+    streetName: null,
     city: null,
     state: null,
-    zipCode: null
+    zipCode: null,
+    lat: null,
+    lng: null
   },
   destinationAddress: {
+    streetNumber: null,
+    streetName: null,
     city: null,
     state: null,
-    zipCode: null
+    zipCode: null,
+    lat: null,
+    lng: null
   },
   totalDistance: null,
   carrier: {
@@ -33,6 +42,7 @@ const initialState = {
     fax: null
   },
   truckType: null,
+  charges: [],
   customerRate: 0,
   specialInstructions: null,
   pickUpDate: null,
@@ -56,7 +66,8 @@ const loadSlice = createSlice({
     setShipper: (state, { payload }) => {
       state.shipper = payload.shipper;
     },
-    setLocations: (state, { payload }) => {
+    setRouteLocations: (state, { payload }) => {
+      console.log(payload)
       state.shipmentAddress = payload.shipmentAddress;
       state.destinationAddress = payload.destinationAddress;
       state.pickUpDate = payload.pickUpDate;
@@ -65,11 +76,24 @@ const loadSlice = createSlice({
     },
     setRates: (state, { payload }) => {
       state.carrierRate = payload.carrierRate;
-      state.customerRate = payload.customerRate
+      state.customerRate = payload.customerRate;
+      state.charges = payload.charges;
+    },
+    addCharge: (state, { payload }) => {
+      payload.id = state.charges.length
+      state.charges.push(payload)
+    },
+    editCharge: (state, { payload }) => {
+      console.log(payload)
+      state.charges.filter(x => x.id == payload.id)[0].rate = payload.lineItem.rate;
+      state.charges.filter(x => x.id == payload.id)[0].notes = payload.lineItem.notes;
+      state.charges.filter(x => x.id == payload.id)[0].quantity = payload.lineItem.quantity;
+      state.charges.filter(x => x.id == payload.id)[0].accessorial = payload.lineItem.accessorial;
+      state.charges.filter(x => x.id == payload.id)[0].total = payload.lineItem.rate * payload.lineItem.quantity;
     },
   }
 })
 
-export const { setCommodities, setCarrier, setShipper, setLocations, setRates } = loadSlice.actions
+export const { setCommodities, setCarrier, setShipper, setRouteLocations, setRates, addCharge, editCharge } = loadSlice.actions
 
 export default loadSlice.reducer

@@ -84,7 +84,7 @@ export default function Shipper() {
     return (
         <form class="h-full pt-8 pb-4 flex flex-col justify-between" onSubmit={handleSubmit(onSubmit)}>
 
-                <div>
+                <div class="border p-4">
                     <div class="w-full mx-auto h-48 flex pb-4">
                       <fieldset class="w-1/2">
                         <legend class="text-black pb-4 text-left w-full">Shipper Lookup</legend>

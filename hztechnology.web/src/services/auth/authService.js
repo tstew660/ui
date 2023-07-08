@@ -40,10 +40,22 @@ export const authApi = createApi({
           method: 'GET'
       }),
       providesTags: ['Quote'],
-  }),
+    }),
     getAllShippers: builder.query({
       query: () => ({
           url: '/shipper',
+          method: 'GET',
+      }),
+    }),
+    getAllEquipment: builder.query({
+      query: () => ({
+          url: '/Load/GetEquipment',
+          method: 'GET',
+      }),
+    }),
+    getAllAccessorials: builder.query({
+      query: () => ({
+          url: '/Load/GetAccessorials',
           method: 'GET',
       }),
     }),
@@ -76,4 +88,4 @@ export const authApi = createApi({
 
 // export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetUserDetailsQuery, useGetAllQuotesQuery, useGetAllShippersQuery, useCalculateRateMutation, useUpdateQuoteMutation, useCreateLoadFromQuoteMutation } = authApi
+export const { useGetUserDetailsQuery, useGetAllQuotesQuery, useGetAllShippersQuery, useCalculateRateMutation, useUpdateQuoteMutation, useCreateLoadFromQuoteMutation, useGetAllAccessorialsQuery, useGetAllEquipmentQuery } = authApi

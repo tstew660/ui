@@ -9,8 +9,8 @@ import { ClipLoader } from "react-spinners";
 
 export default function QuoteMap({locations, directionsResponse, setDirectionsResponse}){
     
-    const mapsAPIKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
+    const mapsAPIKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
     const [startCoordinates, setStartCoordinates] = useState(null);
     const [endCoordinates, setEndCoordinates] = useState(null);
     const [loadingRoute, setLoadingRoute] = useState(false);
@@ -70,6 +70,14 @@ export default function QuoteMap({locations, directionsResponse, setDirectionsRe
 useEffect(() => {
     if (locations != null)
     {
+      console.log(locations)
+      if(locations.startPosition.lat != null && locations.endPosition.lat != null) {
+        console.log("HERE")
+        calculateRoute(locations)
+                .finally(() => {
+                  setLoadingRoute(false)})
+      }
+      else if(locations.startAddress != null) {
         clearRoute()
             setLoadingRoute(true)
             GeoCode().then((coors) => {
@@ -77,6 +85,8 @@ useEffect(() => {
                 .finally(() => {
                   setLoadingRoute(false)})
     }
+      }
+        
     
 }, [locations])
 
@@ -105,7 +115,6 @@ const markerDragEnd = (event, index) => {
 }
   return (
     // Important! Always set the container height explicitly
-    <LoadScript googleMapsApiKey={mapsAPIKey}>
     <div class="w-full h-full">
         
         
@@ -123,6 +132,5 @@ const markerDragEnd = (event, index) => {
         
 
     </div>
-    </LoadScript>
   );
 }
