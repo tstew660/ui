@@ -71,7 +71,7 @@ useEffect(() => {
     if (locations != null)
     {
       console.log(locations)
-      if(locations.startPosition.lat != null && locations.endPosition.lat != null) {
+      if(locations.startPosition != null && locations.endPosition != null) {
         console.log("HERE")
         calculateRoute(locations)
                 .finally(() => {
