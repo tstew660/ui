@@ -85,11 +85,12 @@ export default function Carrier() {
   }
     return (
         <form class="h-full  pt-8 pb-4 flex flex-col justify-between" onSubmit={handleSubmit(onSubmit)}>
-
+            <div class="flex flex-col gap-y-4">
+                <h1>Carrier</h1>
                 <div class="border p-4">
                     <div class="w-full mx-auto h-48 flex pb-4">
                       <fieldset class="w-1/2">
-                        <legend class="text-black pb-4 text-left w-full">Carrier Lookup</legend>
+                      <legend class="text-black pb-4 text-left w-full">Carrier Lookup</legend>
                         <div ref={wrapperRef}>
                         <input
                             type="text"
@@ -120,6 +121,7 @@ export default function Carrier() {
                         <input class="w-full border border-slate-400 h-full pl-2" placeholder="Email" type="text" name="carrier.email" {...register(`carrier.email`, { required: true })} />
                         <input class="w-full border border-slate-400 h-full pl-2" placeholder="Fax" type="text" name="carrier.fax" {...register(`carrier.fax`, { required: true })} />
                       </fieldset>
+                    </div>
                     </div>
                     </div>
                     <div class="h-20 w-full flex place-content-end pt-6 pb-6">

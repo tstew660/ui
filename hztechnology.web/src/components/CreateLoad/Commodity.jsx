@@ -3,9 +3,10 @@ import { useNavigate, useOutletContext } from "react-router-dom";
 import { useForm,useFieldArray } from "react-hook-form";
 import { useState } from "react";
 import PalletTypes from "../../data/PalletTypes.json"
-import {TrashIcon, PencilIcon } from "@heroicons/react/20/solid";
+import {TrashIcon, PencilIcon, PlusIcon } from "@heroicons/react/20/solid";
 import { setCommodities } from "../../features/load/loadSlice";
 import CreateLoadPages from "../../data/CreateLoadPages.json"
+import { useGetAllEquipmentQuery } from "../../services/auth/authService";
 
 export default function Commodity() {
   const [currentPage, setCurrentPage] = useOutletContext();
@@ -13,6 +14,7 @@ export default function Commodity() {
   const navigate = useNavigate();
   const load = useSelector((state) => state.load);
   const { register, control, watch, setValue, handleSubmit } = useForm({ defaultValues: load});
+  const { data, isFetching } = useGetAllEquipmentQuery();
   
 
   const [activeLoadForm, setActiveLoadForm] = useState(load.commodity.length);
@@ -99,20 +101,20 @@ export default function Commodity() {
   return (
     <form class="h-full flex pt-8 pb-4 flex-col justify-between" onSubmit={handleSubmit(onSubmit)}>
         <div class="flex-col flex gap-y-4">
+            <h1>Commodity List</h1>
             <div class="mx-auto border p-4 w-full">
-                <legend class="text-black pb-4 text-left">Commodities</legend>
                   <ul>
                   {fields.map((item, index) => {
                     return (
                     <div class="pb-4 w-full">
                       {index == activeLoadForm ? 
-                        <li class=" bg-white rounded-lg p-6 drop-shadow-xl" key={item.id}>
-                          <h1 class="text-lg font-semibold pb-4">Load {index + 1}</h1>
+                        <li class=" bg-white rounded-lg p-6 drop-shadow-md" key={item.id}>
+                          <h1 class="text-lg font-semibold pb-4">{!isEditing ? "Commodity " + (index + 1) : watchAllFields.commodity[index].name}</h1>
                           <div>
                     <div class="w-full mx-auto flex pb-4">
                       <fieldset class="grid lg:h-20 h-24 w-1/2 lg:gap-2 gap-y-4">
-                        <legend class="text-black pb-4 text-left w-full">Load Name</legend>
-                        <input class="w-full border border-slate-400 h-full pl-2" placeholder="Load Name" type="text" name="commodity.name" {...register(`commodity.${index}.name`, { required: true })} />
+                        <legend class="text-black pb-4 text-left w-full">Commodity Name</legend>
+                        <input class="w-full border border-slate-400 h-full pl-2" placeholder="Commodity Name" type="text" name="commodity.name" {...register(`commodity.${index}.name`, { required: true })} />
                       </fieldset>
                     </div>
                         
@@ -175,9 +177,9 @@ export default function Commodity() {
                   </div>
                         
                       </li> : 
-                      <div class="flex flex-row bg-white h-8 place-content-center place-items-center rounded-lg p-6 drop-shadow-xl justify-between">
+                      <div class="flex flex-row bg-white h-8 place-content-center place-items-center rounded-lg p-6 drop-shadow-md justify-between">
                       <div class="flex flex-row gap-x-3 ">
-                        <p class="font-semibold">Load {index + 1} </p>
+                        <p class="font-semibold">{watchAllFields.commodity[index].name }</p>
 
                       </div>
                       <div>
@@ -196,18 +198,27 @@ export default function Commodity() {
                   })}
                 </ul>
                 {!showLoadForm ? 
-                  <button class="bg-transparent border border-yellow-500 hover:border-yellow-600 h-12 text-black rounded-full w-32" onClick={addLoad}>Add Load</button> :
+                  <button type="button" onClick={addLoad} class="bg-transparent border border-yellow-500 hover:border-yellow-600 text-black rounded-full text-sm flex flex-row w-40 place-content-center place-items-center">
+                    <PlusIcon class="h-8" />
+                    <p class="p-1">Add a Commodity</p>
+                  </button> :
                   <></>}
                 </div>
+                <h1>Additional Load Info</h1>
                 <div class="border p-4">
                     <div class="grid grid-cols-2 lg:gap-2 gap-y-4">
-                    <div class="pt-6 w-full">
+                    <div class="w-3/4">
                     <legend class="text-black pb-4 text-left">Truck Type</legend>
+                    {data &&
                         <fieldset class="h-8">
-                        <select class="w-full border border-slate-400 h-full pl-2" type="text" name="truckType" {...register(`truckType`, { required: false })} />
-                        </fieldset>
+                        <select class="w-full border border-slate-400 h-full pl-2" type="text" name="truckType" {...register(`truckType`, { required: false })} >
+                            {data.map((x) => 
+                              <option>{x.name}</option>
+                            )} 
+                        </select>
+                        </fieldset>}
                     </div>
-                    <div class="pt-6 w-full">
+                    <div class="w-3/4">
                     <legend class="text-black pb-4 text-left">Total Weight</legend>
                         <fieldset class="h-8">
                         <input class="w-full border border-slate-400 h-full pl-2" defaultValue={totalWeight} type="number" name="totalWeight" {...register(`totalWeight`, { required: true })} />

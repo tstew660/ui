@@ -83,7 +83,8 @@ export default function Shipper() {
   }
     return (
         <form class="h-full pt-8 pb-4 flex flex-col justify-between" onSubmit={handleSubmit(onSubmit)}>
-
+            <div class="flex flex-col gap-y-4">
+                <h1>Shipper</h1>
                 <div class="border p-4">
                     <div class="w-full mx-auto h-48 flex pb-4">
                       <fieldset class="w-1/2">
@@ -118,6 +119,7 @@ export default function Shipper() {
                         <input class="w-full border border-slate-400 h-full pl-2" placeholder="Email" type="text" name="shipper.email" {...register(`shipper.email`, { required: true })} />
                         <input class="w-full border border-slate-400 h-full pl-2" placeholder="Fax" type="text" name="shipper.fax" {...register(`shipper.fax`, { required: true })} />
                       </fieldset>
+                    </div>
                     </div>
                     </div>
                     <div class="h-20 w-full flex place-content-end pt-6 pb-6">

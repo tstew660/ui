@@ -15,7 +15,7 @@ export default function LocationSearchBox({setLocations, locations, stop}) {
                 streetName: place.address_components.filter(val => val.types.includes("route"))[0] && place.address_components.filter(val => val.types.includes("route"))[0].long_name,
                 city: place.address_components.filter(val => val.types.includes("locality"))[0] && place.address_components.filter(val => val.types.includes("locality"))[0].long_name,
                 state: place.address_components.filter(val => val.types.includes("administrative_area_level_1"))[0] && place.address_components.filter(val => val.types.includes("administrative_area_level_1"))[0].long_name,
-                zipCode: place.address_components.filter(val => val.types.includes("postal_code"))[0] && place.address_components.filter(val => val.types.includes("postal_code"))[0].long_name,
+                zipCode: !place.types.includes("locality") ? place.address_components.filter(val => val.types.includes("postal_code"))[0] && place.address_components.filter(val => val.types.includes("postal_code"))[0].long_name : "N/A",
                 lat: place.geometry.location.lat(),
                 lng: place.geometry.location.lng()
             }

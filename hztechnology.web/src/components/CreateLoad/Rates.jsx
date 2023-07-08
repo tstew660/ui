@@ -96,6 +96,9 @@ export default function Rates() {
                         <RateTable data={load.charges.filter(x => x.chargeType == 1)} setChargeToEdit={setChargeToEdit} />
                     </div>
                 </div>
+                <div class="flex flex-col gap-y-4">
+                    <h1>Margins</h1>
+                </div>
             </div>
             <div class="h-20 w-full flex place-content-end pt-6 pb-6">
                 <button class="bg-transparent border border-yellow-500 hover:border-yellow-600 h-12  text-black rounded-full w-32" type="submit">{currentPage.prettyNextPage}</button>
