@@ -4,29 +4,36 @@ import { useForm, useFieldArray } from "react-hook-form";
 import { useState, useRef, useEffect } from "react";
 import PalletTypes from "../../data/PalletTypes.json"
 import {TrashIcon, PencilIcon} from "@heroicons/react/20/solid";
-import { setCarrier, setCommodities } from "../../features/load/loadSlice";
+import { setRates, setCommodities } from "../../features/load/loadSlice";
 import CreateLoadPages from "../../data/CreateLoadPages.json"
 import { useGetAllAccessorialsQuery } from '../../services/auth/authService'
 import RateTable from "./RateTable";
 import CreateRateLineItemModal from "../CreateRateLineItemModal";
 import { PlusIcon } from "@heroicons/react/20/solid";
+import TotalTable from "./TotalTable";
 
 export default function Rates() {
+    const load = useSelector((state) => state.load);
     const [currentPage, setCurrentPage] = useOutletContext();
     const [showIncomeModal, setShowIncomeModal] = useState(false);
     const [showExpenseModal, setShowExpenseModal] = useState(false);
     const [chargeToEdit, setChargeToEdit] = useState(0);
-    const [editSelected, setEditSelected] = useState(false)
+    const [editSelected, setEditSelected] = useState(false);
+    const [incomeTotal, setIncomeTotal] = useState(load.customerRate)
+    const [expenseTotal, setExpenseTotal] = useState(load.carrierRate)
+    const [marginTotal, setMarginTotal] = useState(parseFloat(load.customerRate) + parseFloat(load.carrierRate))
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const load = useSelector((state) => state.load);
     const { register, control, handleSubmit, setValue } = useForm({ defaultValues: load});
     const { data, isFetching } = useGetAllAccessorialsQuery();
 
-    const onSubmit = (data) => {
+    const onSubmit = () => {
         console.log(data)
         setCurrentPage(CreateLoadPages[currentPage.order]);
-        dispatch(setCarrier(data));
+        dispatch(setRates({
+            carrierRate: expenseTotal,
+            customerRate: incomeTotal,
+        }));
         navigate(`../${currentPage.nextPage}`);
       };
 
@@ -72,7 +79,7 @@ export default function Rates() {
                                 <CreateRateLineItemModal type={0} setAddLineItemModal={setShowIncomeModal} accessorials={data} charge={load.charges.filter(x => x.id == chargeToEdit)[0]} isEdit={editSelected} id={chargeToEdit} /> 
                             ) : null}
                         </div>
-                        <RateTable data={load.charges.filter(x => x.chargeType == 0)} setChargeToEdit={setChargeToEdit} />
+                        <RateTable data={load.charges.filter(x => x.chargeType == 0)} setChargeToEdit={setChargeToEdit} total={incomeTotal} setTotal={setIncomeTotal} />
                     </div>
                 </div>
                 <div class="flex flex-col gap-y-4">
@@ -93,15 +100,18 @@ export default function Rates() {
                                 <CreateRateLineItemModal type={1} setAddLineItemModal={setShowExpenseModal} accessorials={data} charge={load.charges.filter(x => x.id == chargeToEdit)[0]} isEdit={editSelected} id={chargeToEdit} /> 
                             ) : null}
                         </div>
-                        <RateTable data={load.charges.filter(x => x.chargeType == 1)} setChargeToEdit={setChargeToEdit} />
+                        <RateTable data={load.charges.filter(x => x.chargeType == 1)} setChargeToEdit={setChargeToEdit} total={expenseTotal} setTotal={setExpenseTotal} />
                     </div>
                 </div>
                 <div class="flex flex-col gap-y-4">
                     <h1>Margins</h1>
+                    <div class="border p-4 flex flex-col place-content-end place-items-end">
+                        <TotalTable incomeRate={incomeTotal} expenseRate={expenseTotal} totalMargin={marginTotal} setTotalMargin={setMarginTotal} />
+                    </div>
                 </div>
             </div>
             <div class="h-20 w-full flex place-content-end pt-6 pb-6">
-                <button class="bg-transparent border border-yellow-500 hover:border-yellow-600 h-12  text-black rounded-full w-32" type="submit">{currentPage.prettyNextPage}</button>
+                <button class="bg-transparent border border-yellow-500 hover:border-yellow-600 h-12 text-sm text-black rounded-full w-32" type="submit">{currentPage.prettyNextPage}</button>
             </div>          
     </form>
     )

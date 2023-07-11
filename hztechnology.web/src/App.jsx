@@ -23,6 +23,7 @@ import ShipperComponent from "./components/CreateLoad/Shipper"
 import Carrier from "./components/CreateLoad/Carrier"
 import Locations from "./components/CreateLoad/Locations"
 import Rates from "./components/CreateLoad/Rates"
+import Review from "./components/CreateLoad/Review"
 
 function App() {
   const router = createBrowserRouter([
@@ -75,6 +76,10 @@ function App() {
                     {
                       path: "rates",
                       element: <Rates />
+                    },
+                    {
+                      path: "review",
+                      element: <Review />
                     }
                   ]
                 }

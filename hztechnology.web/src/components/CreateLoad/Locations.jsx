@@ -13,8 +13,8 @@ import QuoteMap from "../QuoteMap";
 export default function Locations() {
     const load = useSelector((state) => state.load);
     const [locations, setLocations] = useState({
-        pickUp : {},
-        dropOff: {}
+        pickUp : load.shipmentAddress,
+        dropOff: load.destinationAddress
     });
     const [mapLocations, setMapLocations] = useState({
         startPosition: {

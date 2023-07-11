@@ -31,7 +31,14 @@
         "order": 5,
         "page": "rates",
         "previousPage" : "locations",
-        "nextPage": "confirmation",
+        "nextPage": "review",
         "prettyNextPage": "Review Load Info"
+    },
+    {
+        "order": 6,
+        "page": "review",
+        "previousPage" : "rates",
+        "nextPage": "",
+        "prettyNextPage": ""
     }
 ]

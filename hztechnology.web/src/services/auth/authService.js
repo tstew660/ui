@@ -16,7 +16,7 @@ export const authApi = createApi({
       }
     },
   }),
-  tagTypes: ['Quote'],
+  tagTypes: ['Quote', 'Load'],
   endpoints: (builder) => ({
     getUserDetails: builder.query({
       query: () => ({
@@ -44,6 +44,12 @@ export const authApi = createApi({
     getAllShippers: builder.query({
       query: () => ({
           url: '/shipper',
+          method: 'GET',
+      }),
+    }),
+    getAllCarriers: builder.query({
+      query: () => ({
+          url: '/carrier',
           method: 'GET',
       }),
     }),
@@ -75,6 +81,14 @@ export const authApi = createApi({
       }),
       invalidatesTags: (result, error, arg) => [{ type: 'Quote', id: arg.id }],
     }),
+    createLoad: builder.mutation({
+      query: (payload) => ({
+          url: '/load/CreateLoad',
+          method: 'POST',
+          body: payload
+      }),
+      invalidatesTags: (result, error, arg) => [{ type: 'Load', id: arg.id }],
+    }),
     createLoadFromQuote: builder.mutation({
       query: (payload) => ({
           url: '/load/CreateLoadFromQuoteAsync',
@@ -88,4 +102,6 @@ export const authApi = createApi({
 
 // export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetUserDetailsQuery, useGetAllQuotesQuery, useGetAllShippersQuery, useCalculateRateMutation, useUpdateQuoteMutation, useCreateLoadFromQuoteMutation, useGetAllAccessorialsQuery, useGetAllEquipmentQuery } = authApi
+export const { useGetUserDetailsQuery, useGetAllQuotesQuery, useGetAllShippersQuery, useCalculateRateMutation, 
+  useUpdateQuoteMutation, useCreateLoadFromQuoteMutation, useGetAllAccessorialsQuery, useGetAllEquipmentQuery, 
+  useGetAllCarriersQuery, useCreateLoadMutation } = authApi

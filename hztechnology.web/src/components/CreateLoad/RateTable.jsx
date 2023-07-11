@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState, useRef } from 'react';
 import { useTable, useTableState } from 'react-table';
 
-const RateTable = ({ data, setChargeToEdit }) => {
+const RateTable = ({ data, setChargeToEdit, total, setTotal }) => {
   const columns = useMemo(
     () => [
         {
@@ -11,7 +11,7 @@ const RateTable = ({ data, setChargeToEdit }) => {
         },
       {
         Header: 'Category',
-        accessor: 'accessorial',
+        accessor: d => `${d.accessorial.name}`,
         cellClassName: 'text-center',
       },
       {
@@ -55,7 +55,6 @@ const RateTable = ({ data, setChargeToEdit }) => {
     state: { expanded },
   } = useTable({ columns, data}, useTableState);
 
-  const [total, setTotal] = React.useState(0);
   const [selectedRowIndex, setSelectedRowIndex] = useState(null);
   const tableRef = useRef(null);
 
@@ -93,7 +92,7 @@ const RateTable = ({ data, setChargeToEdit }) => {
 
   return (
     <div ref={tableRef}>
-        <table {...getTableProps()} className="table-auto w-full">
+      <table {...getTableProps()} className="table-auto w-full">
         <thead>
             {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>

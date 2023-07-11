@@ -213,7 +213,7 @@ export default function Commodity() {
                         <fieldset class="h-8">
                         <select class="w-full border border-slate-400 h-full pl-2" type="text" name="truckType" {...register(`truckType`, { required: false })} >
                             {data.map((x) => 
-                              <option>{x.name}</option>
+                              <option value={x.id}>{x.name}</option>
                             )} 
                         </select>
                         </fieldset>}

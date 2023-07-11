@@ -7,7 +7,7 @@ import {TrashIcon, PencilIcon} from "@heroicons/react/20/solid";
 import { setCarrier, setCommodities } from "../../features/load/loadSlice";
 import CreateLoadPages from "../../data/CreateLoadPages.json"
 
-import { useGetAllShippersQuery } from '../../services/auth/authService'
+import { useGetAllCarriersQuery } from '../../services/auth/authService'
 
 import { ClipLoader } from "react-spinners"
 
@@ -18,9 +18,9 @@ export default function Carrier() {
   const navigate = useNavigate();
   const load = useSelector((state) => state.load);
   const { register, control, handleSubmit, setValue } = useForm({ defaultValues: load});
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState(load.carrier.name);
   const [filteredData, setFilteredData] = useState([]);
-  const { data, isFetching } = useGetAllShippersQuery();
+  const { data, isFetching } = useGetAllCarriersQuery();
   const [selectedCarrier, setSelectedCarrier] = useState(false);
 
   function useOutsideAlerter(ref) {

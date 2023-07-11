@@ -18,7 +18,7 @@ export default function Shipper() {
   const navigate = useNavigate();
   const load = useSelector((state) => state.load);
   const { register, control, handleSubmit, setValue } = useForm({ defaultValues: load});
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState(load.shipper.name);
   const [filteredData, setFilteredData] = useState([]);
   const { data, isFetching } = useGetAllShippersQuery();
   const [selectedShipper, setSelectedShipper] = useState({});

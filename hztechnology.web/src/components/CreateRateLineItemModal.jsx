@@ -13,7 +13,10 @@ export default function CreateRateLineItemModal({setAddLineItemModal, accessoria
   console.log(charge)
     const dispatch = useDispatch();
     const [lineItem, setLineItem] = useState(charge != null && isEdit ? charge : {
-      accessorial: null,
+      accessorial: {
+        name: null,
+        id: null
+      },
       rate: null,
       notes: null,
       quantity: 0,
@@ -58,7 +61,10 @@ export default function CreateRateLineItemModal({setAddLineItemModal, accessoria
                         {accessorials && 
                         <select value={lineItem.accessorial} defaultValue={lineItem.accessorial} class="w-full border border-slate-400 h-8 pl-2" onChange={(e) => 
                           setLineItem({
-                          accessorial: e.target.value,
+                          accessorial: {
+                            name: accessorials.filter(x => x.id == e.target.value),
+                            id: e.target.value
+                          },
                           rate: lineItem.rate,
                           quantity: lineItem.quantity,
                           notes: lineItem.notes,
