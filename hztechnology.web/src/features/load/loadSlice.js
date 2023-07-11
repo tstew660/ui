@@ -11,7 +11,8 @@ const initialState = {
     state: null,
     zipCode: null,
     lat: null,
-    lng: null
+    lng: null,
+    formattedAddress: null
   },
   destinationAddress: {
     streetNumber: null,
@@ -20,7 +21,8 @@ const initialState = {
     state: null,
     zipCode: null,
     lat: null,
-    lng: null
+    lng: null,
+    formattedAddress: null
   },
   totalDistance: null,
   carrier: {
@@ -41,7 +43,7 @@ const initialState = {
     phone: null,
     fax: null
   },
-  truckType: null,
+  equipment: null,
   charges: [],
   customerRate: 0,
   specialInstructions: null,
@@ -58,6 +60,7 @@ const loadSlice = createSlice({
       state.commodity = payload.commodity;
       state.totalWeight = payload.totalWeight;
       state.specialInstructions = payload.specialInstructions;
+      state.equipment = payload.truckType
     },
     setCarrier: (state, { payload }) => {
       console.log(payload);
@@ -77,7 +80,6 @@ const loadSlice = createSlice({
     setRates: (state, { payload }) => {
       state.carrierRate = payload.carrierRate;
       state.customerRate = payload.customerRate;
-      state.charges = payload.charges;
     },
     addCharge: (state, { payload }) => {
       payload.id = state.charges.length
